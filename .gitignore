@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Data files (too large for git)
+data/raw/images/
+data/processed/
+data/models/*.pth
+data/models/*.pkl
+data/outputs/
+
+# Environment
+.env
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Screenshots (generated)
+screenshots/
+
+# Generators (utility scripts)
+generate_docx.py
+generate_pptx.py
+capture_screenshots.py
+
+# Generated docs
+*.docx
+*.pptx
