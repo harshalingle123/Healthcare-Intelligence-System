@@ -1,0 +1,64 @@
+spark:
+  app_name: "HealthcareIntelligenceSystem"
+  master: "local[*]"
+  driver_memory: "8g"
+  executor_memory: "4g"
+
+paths:
+  raw_data: "data/raw/"
+  processed_data: "data/processed/"
+  models: "data/models/"
+  outputs: "data/outputs/"
+
+data_generation:
+  num_patients: 10000
+  num_lab_records_per_patient: 5
+  num_images: 1000
+  random_seed: 42
+
+models:
+  symptom_classifier:
+    type: "random_forest"
+    max_depth: 10
+    num_trees: 150
+    num_classes: 5
+
+  nlp:
+    model_name: "emilyalsentzer/Bio_ClinicalBERT"
+    max_length: 512
+    batch_size: 16
+    epochs: 3
+    learning_rate: 2.0e-5
+
+  image_classifier:
+    architecture: "densenet121"
+    pretrained: true
+    num_classes: 5
+    image_size: 224
+    batch_size: 32
+    epochs: 10
+    learning_rate: 1.0e-4
+
+  lab_anomaly:
+    contamination: 0.1
+    n_estimators: 200
+
+  ensemble:
+    weights:
+      structured: 0.30
+      nlp: 0.25
+      lab: 0.25
+      imaging: 0.20
+    meta_learner: "logistic_regression"
+
+evaluation:
+  test_split: 0.2
+  cv_folds: 5
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - auc_roc
+    - sensitivity
+    - specificity
